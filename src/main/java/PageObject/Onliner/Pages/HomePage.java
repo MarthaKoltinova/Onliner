@@ -1,14 +1,18 @@
-package PageObject.Onliner;
+package PageObject.Onliner.Pages;
 
 import PageObject.BasePage;
-import org.openqa.selenium.By;
+import PageObject.Onliner.Enums.Menu;
 import org.openqa.selenium.WebDriver;
 
 public class HomePage extends BasePage {
-    public By catalog = By.linkText("Каталог");
 
     public HomePage(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public BasePage clickOnMenu(Menu menu) {
+        return super.clickOnMenu(menu);
     }
 
     public HomePage open(String url) {
@@ -17,9 +21,8 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    public HomePage clickCatalog() {
-        logger.debug("Open catalog ");
-        click(catalog);
-        return this;
+    @Override
+    public BasePage clickOnEntrance() {
+        return super.clickOnEntrance();
     }
 }
