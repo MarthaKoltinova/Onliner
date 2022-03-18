@@ -9,6 +9,7 @@ public abstract class BasePage {
     protected WebDriver driver;
     protected Logger logger = Logger.getLogger(BasePage.class);
     private By entrance = By.cssSelector(".auth-bar__item.auth-bar__item--text");
+    public By product = By.cssSelector(".cart-form__link.cart-form__link_primary.cart-form__link_base-alter");
 
     protected BasePage(WebDriver driver) {
         this.driver = driver;
@@ -20,17 +21,16 @@ public abstract class BasePage {
         return this;
     }
 
-    protected BasePage clickOnMenu(Menu menu) {
+    public BasePage clickOnMenu(Menu menu) {
         logger.debug("Click on menu tab");
         driver.findElement(By.partialLinkText(menu.getMenu())).click();
         return this;
     }
 
-    protected BasePage clickOnEntrance() {
+    public BasePage clickOnEntrance() {
         logger.debug("Click on tab entrance ");
         driver.findElement(entrance).click();
         return this;
     }
-
 
 }

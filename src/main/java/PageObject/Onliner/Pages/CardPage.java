@@ -9,4 +9,7 @@ public class CardPage extends BasePage {
         super(driver);
     }
 
+    public String getName() {
+        return driver.findElement(product).getText();
+    }
 }

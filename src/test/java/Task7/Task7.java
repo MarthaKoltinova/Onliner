@@ -26,12 +26,12 @@ public class Task7 extends BaseTest {
                 .clickOnTabSubCategory(SubCategory.MOBILE_PHONES)
                 .clickOnItem(Group.PHONES);
         get(MobilePhonesPage.class)
-                .verifyTitle("Мобильные телефоны");
+                .verifyThatTitleIs("Мобильные телефоны");
         get(MobilePhonesPage.class)
                 .clickOnCheckbox(CheckboxItems.HONOR);
         get(MobilePhonesPage.class)
                 .sleep(10);
-        get(MobilePhonesPage.class)
+        get(MobilePhonesChecksPage.class)
                 .checkSearchResults("HONOR");
         logger.info("Test searchInCatalog finished");
     }
@@ -46,13 +46,13 @@ public class Task7 extends BaseTest {
         get(LoginChecksPage.class)
                 .verifyThatTitleIs("Регистрация");
         get(LoginPage.class)
-                .enterWrongEmail();
+                .enterEmail("12345");
         get(LoginChecksPage.class)
-                .verifyThatHintIsDisplayed();
+                .verifyThatEmailHintIs("Некорректный e-mail");
         get(LoginPage.class)
-                .enterWrongPassword();
+                .enterPassword(1234,111111111);
         get(LoginChecksPage.class)
-                .verifyThatHintsIsDisplayed();
+                .verifyThatPasswordHintsIs("Минимум 8 символов","Пароли не совпадают");
         logger.info("Test catalogSearch finished");
     }
 
@@ -66,7 +66,7 @@ public class Task7 extends BaseTest {
                 .clickOnTabSubCategory(SubCategory.VIDEO_GAMES)
                 .clickOnItem(Group.GAMING_CONSOLES);
         get(GamingConsolesPage.class)
-                .verifyTitle("Игровые приставки");
+                .verifyThatTitleIs("Игровые приставки");
         get(GamingConsolesPage.class)
                 .clickOnItem(Items.FIRST_ITEM_CONSOLES);
         get(Item.class)
@@ -76,11 +76,11 @@ public class Task7 extends BaseTest {
         get(InformPage.class)
                 .clickContinueShopping();
         get(GamingConsolesChecksPage.class)
-                .verifyThatTextIs("В корзине");
+                .verifyTextOfTheCardButton("В корзине");
         get(GamingConsolesPage.class)
                 .goToCard();
         get(CardChecksPage.class)
-                .verifyThatItemIsDisplayed();
+                .verifyThatItemIs("Игровая приставка Sony PlayStation 5");
         logger.info("Test addItemToCart finished");
     }
 }

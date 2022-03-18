@@ -5,14 +5,33 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage {
-
+    private By title = By.cssSelector(".auth-form__title.auth-form__title_big.auth-form__title_condensed-default");
     public By registration = By.linkText("Зарегистрироваться на Onlíner");
     private By email = By.xpath("//input[@type='email']");
     private By password = By.xpath("//input[@type='password']");
     private By passwordRepeat = By.xpath("//*[@autocomplete='repeatPassword']//input");
+    private By wrongEmail = By.xpath("//div[@class='auth-form__description auth-form__description_error auth-form__description_base auth-form__description_extended-other']");
+    private By wrongPassword = By.xpath("//div[@class='auth-form__description auth-form__description_primary auth-form__description_tiny auth-form__description_condensed-other']");
+    private By wrongRepeatPassword = By.xpath("//div[@class='auth-form__description auth-form__description_error auth-form__description_base auth-form__description_extended-other']");
 
     public LoginPage(WebDriver driver) {
         super(driver);
+    }
+
+    public String getTitle() {
+        return driver.findElement(title).getText();
+    }
+
+    public String getEmailHint() {
+        return driver.findElement(wrongEmail).getText();
+    }
+
+    public String getPasswordHint() {
+        return driver.findElement(wrongPassword).getText();
+    }
+
+    public String getRepeatPasswordHint() {
+        return driver.findElement(wrongRepeatPassword).getText();
     }
 
     public LoginPage goToRegistration() {
@@ -21,20 +40,20 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    public LoginPage enterWrongEmail() {
+    public LoginPage enterEmail(String value) {
         logger.debug("enter wrong email");
         click(email);
-        driver.findElement(email).sendKeys("12345");
+        driver.findElement(email).sendKeys(value);
         return this;
     }
 
-    public LoginPage enterWrongPassword() {
+    public LoginPage enterPassword(Integer value, Integer value2) {
         logger.debug("enter wrong password");
         click(password);
-        driver.findElement(password).sendKeys("1234");
+        driver.findElement(password).sendKeys(value.toString());
         logger.debug("enter wrong repeat password");
         click(passwordRepeat);
-        driver.findElement(passwordRepeat).sendKeys("113456789123");
+        driver.findElement(passwordRepeat).sendKeys(value2.toString());
         return this;
     }
 }
