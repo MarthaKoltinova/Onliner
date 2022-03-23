@@ -2,7 +2,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Task7">
     <parameter name="property" value="onliner"/>
-    <parameter name="str" value="HONOR"/>
     <test name="Task7">
         <classes>
             <class name="Task7.Task7"/>

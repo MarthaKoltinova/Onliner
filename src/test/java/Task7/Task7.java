@@ -4,7 +4,6 @@ import BaseObjects.BaseTest;
 import PageObject.Onliner.Enums.*;
 import PageObject.Onliner.Pages.*;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class Task7 extends BaseTest {
@@ -15,7 +14,6 @@ public class Task7 extends BaseTest {
                 .open(property.getProperty("url"));
     }
 
-    @Parameters({"str"})
     @Test(priority = 1)
     public void searchInCatalog() {
         logger.info("Test searchInCatalog started");
@@ -29,9 +27,7 @@ public class Task7 extends BaseTest {
                 .verifyThatTitleIs("Мобильные телефоны");
         get(MobilePhonesPage.class)
                 .clickOnCheckbox(CheckboxItems.HONOR);
-        get(MobilePhonesPage.class)
-                .sleep(10);
-        get(MobilePhonesChecksPage.class)
+        get(MobilePhonesPageChecks.class)
                 .checkSearchResults("HONOR");
         logger.info("Test searchInCatalog finished");
     }
@@ -43,16 +39,18 @@ public class Task7 extends BaseTest {
                 .clickOnEntrance();
         get(LoginPage.class)
                 .goToRegistration();
-        get(LoginChecksPage.class)
+        get(LoginPageChecks.class)
                 .verifyThatTitleIs("Регистрация");
         get(LoginPage.class)
                 .enterEmail("12345");
-        get(LoginChecksPage.class)
+        get(LoginPageChecks.class)
                 .verifyThatEmailHintIs("Некорректный e-mail");
         get(LoginPage.class)
-                .enterPassword(1234,111111111);
-        get(LoginChecksPage.class)
-                .verifyThatPasswordHintsIs("Минимум 8 символов","Пароли не совпадают");
+                .enterPassword(1234)
+                .enterRepeatPassword(111111111);
+        get(LoginPageChecks.class)
+                .verifyThatPasswordHintsIs("Минимум 8 символов")
+                .verifyThatRepeatPasswordHintsIs("Пароли не совпадают");
         logger.info("Test catalogSearch finished");
     }
 
@@ -68,18 +66,19 @@ public class Task7 extends BaseTest {
         get(GamingConsolesPage.class)
                 .verifyThatTitleIs("Игровые приставки");
         get(GamingConsolesPage.class)
-                .clickOnItem(Items.FIRST_ITEM_CONSOLES);
+                .clickOnItem();
         get(Item.class)
                 .addItemToCard();
-        get(InformChecksPage.class)
-                .verifyThatTextIs("Продолжить покупки", "Перейти в корзину");
+        get(InformPageChecks.class)
+                .verifyThatTextOfShoppingCardIs("Продолжить покупки")
+                .verifyThatTextOfGoToCardIs("Перейти в корзину");
         get(InformPage.class)
                 .clickContinueShopping();
-        get(GamingConsolesChecksPage.class)
+        get(GamingConsolesPageChecks.class)
                 .verifyTextOfTheCardButton("В корзине");
         get(GamingConsolesPage.class)
                 .goToCard();
-        get(CardChecksPage.class)
+        get(CartPageChecks.class)
                 .verifyThatItemIs("Игровая приставка Sony PlayStation 5");
         logger.info("Test addItemToCart finished");
     }

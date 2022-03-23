@@ -47,13 +47,17 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    public LoginPage enterPassword(Integer value, Integer value2) {
+    public LoginPage enterPassword(Integer value) {
         logger.debug("enter wrong password");
         click(password);
         driver.findElement(password).sendKeys(value.toString());
+        return this;
+    }
+
+    public LoginPage enterRepeatPassword(Integer value) {
         logger.debug("enter wrong repeat password");
         click(passwordRepeat);
-        driver.findElement(passwordRepeat).sendKeys(value2.toString());
+        driver.findElement(passwordRepeat).sendKeys(value.toString());
         return this;
     }
 }

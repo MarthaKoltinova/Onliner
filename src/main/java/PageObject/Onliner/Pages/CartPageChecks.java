@@ -3,13 +3,13 @@ package PageObject.Onliner.Pages;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
-public class CardChecksPage extends CardPage {
+public class CartPageChecks extends CartPage {
 
-    public CardChecksPage(WebDriver driver) {
+    public CartPageChecks(WebDriver driver) {
         super(driver);
     }
 
-    public CardChecksPage verifyThatItemIs(String value) {
+    public CartPageChecks verifyThatItemIs(String value) {
         logger.debug("Check item in the page");
         Assert.assertEquals(getName(), value);
         return this;

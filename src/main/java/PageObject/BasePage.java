@@ -9,7 +9,6 @@ public abstract class BasePage {
     protected WebDriver driver;
     protected Logger logger = Logger.getLogger(BasePage.class);
     private By entrance = By.cssSelector(".auth-bar__item.auth-bar__item--text");
-    public By product = By.cssSelector(".cart-form__link.cart-form__link_primary.cart-form__link_base-alter");
 
     protected BasePage(WebDriver driver) {
         this.driver = driver;
