@@ -6,18 +6,18 @@ import org.openqa.selenium.WebDriver;
 
 public class InformPage extends BasePage {
     private By continueShopping = By.cssSelector(".button-style.button-style_auxiliary.button-style_base-alter.product-recommended__button.helpers_hide_tablet");
-    private By goToCard = By.cssSelector(".button-style.button-style_another.button-style_base-alter.product-recommended__button");
+    private By goToCart = By.cssSelector(".button-style.button-style_another.button-style_base-alter.product-recommended__button");
 
     public InformPage(WebDriver driver) {
         super(driver);
     }
 
-    public String getShoppingCardText() {
+    public String getShoppingCartText() {
         return driver.findElement(continueShopping).getText();
     }
 
-    public String getGoToCardText() {
-        return driver.findElement(goToCard).getText();
+    public String getGoToCartText() {
+        return driver.findElement(goToCart).getText();
     }
 
     public InformPage clickContinueShopping() {

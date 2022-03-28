@@ -9,14 +9,14 @@ public class InformPageChecks extends InformPage {
         super(driver);
     }
 
-    public InformPageChecks verifyThatTextOfShoppingCardIs(String value) {
+    public InformPageChecks verifyThatTextOfShoppingCartIs(String value) {
         logger.debug("Verify text name");
-        Assert.assertEquals(getShoppingCardText(), value);
+        Assert.assertEquals(getShoppingCartText(), value);
         return this;
     }
 
-    public InformPageChecks verifyThatTextOfGoToCardIs(String value) {
-        Assert.assertEquals(getGoToCardText(), value);
+    public InformPageChecks verifyThatTextOfGoToCartIs(String value) {
+        Assert.assertEquals(getGoToCartText(), value);
         return this;
     }
 }

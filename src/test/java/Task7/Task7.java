@@ -1,6 +1,8 @@
 package Task7;
 
 import BaseObjects.BaseTest;
+import PageObject.BaseGroup;
+import PageObject.BaseGroupChecks;
 import PageObject.Onliner.Enums.*;
 import PageObject.Onliner.Pages.*;
 import org.testng.annotations.BeforeMethod;
@@ -23,11 +25,11 @@ public class Task7 extends BaseTest {
                 .clickOnTabCategory(Category.ELECTRONICS)
                 .clickOnTabSubCategory(SubCategory.MOBILE_PHONES)
                 .clickOnItem(Group.PHONES);
-        get(MobilePhonesPage.class)
+        get(BaseGroupChecks.class)
                 .verifyThatTitleIs("Мобильные телефоны");
         get(MobilePhonesPage.class)
                 .clickOnCheckbox(CheckboxItems.HONOR);
-        get(MobilePhonesPageChecks.class)
+        get(BaseGroupChecks.class)
                 .checkSearchResults("HONOR");
         logger.info("Test searchInCatalog finished");
     }
@@ -63,23 +65,25 @@ public class Task7 extends BaseTest {
                 .clickOnTabCategory(Category.ELECTRONICS)
                 .clickOnTabSubCategory(SubCategory.VIDEO_GAMES)
                 .clickOnItem(Group.GAMING_CONSOLES);
-        get(GamingConsolesPage.class)
+        get(BaseGroupChecks.class)
                 .verifyThatTitleIs("Игровые приставки");
+        get(BaseGroup.class)
+                .getItemName();
         get(GamingConsolesPage.class)
-                .clickOnItem();
-        get(Item.class)
+                .clickOnItem(1);
+        get(ProductPage.class)
                 .addItemToCard();
         get(InformPageChecks.class)
-                .verifyThatTextOfShoppingCardIs("Продолжить покупки")
-                .verifyThatTextOfGoToCardIs("Перейти в корзину");
+                .verifyThatTextOfShoppingCartIs("Продолжить покупки")
+                .verifyThatTextOfGoToCartIs("Перейти в корзину");
         get(InformPage.class)
                 .clickContinueShopping();
-        get(GamingConsolesPageChecks.class)
-                .verifyTextOfTheCardButton("В корзине");
+        get(ProductPageChecks.class)
+                .verifyTextOfTheCartButton("В корзине");
         get(GamingConsolesPage.class)
-                .goToCard();
-        get(CartPageChecks.class)
-                .verifyThatItemIs("Игровая приставка Sony PlayStation 5");
+                .goToCart();
+        get(BaseGroupChecks.class)
+                .verifyProductNameInCart();
         logger.info("Test addItemToCart finished");
     }
 }

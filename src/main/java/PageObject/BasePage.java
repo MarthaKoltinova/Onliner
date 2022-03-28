@@ -9,6 +9,7 @@ public abstract class BasePage {
     protected WebDriver driver;
     protected Logger logger = Logger.getLogger(BasePage.class);
     private By entrance = By.cssSelector(".auth-bar__item.auth-bar__item--text");
+    private By cart = By.cssSelector(".auth-bar__item.auth-bar__item--cart");
 
     protected BasePage(WebDriver driver) {
         this.driver = driver;
@@ -29,6 +30,12 @@ public abstract class BasePage {
     public BasePage clickOnEntrance() {
         logger.debug("Click on tab entrance ");
         driver.findElement(entrance).click();
+        return this;
+    }
+
+    public BasePage goToCart() {
+        logger.debug("go to cart");
+        driver.findElement(cart).click();
         return this;
     }
 

@@ -10,8 +10,8 @@ public class CartPage extends BasePage {
     public CartPage(WebDriver driver) {
         super(driver);
     }
-
-    public String getName() {
+    public String getProductName() {
         return driver.findElement(product).getText();
+
     }
 }

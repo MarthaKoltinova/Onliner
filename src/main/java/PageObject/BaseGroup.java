@@ -4,17 +4,29 @@ import PageObject.Onliner.Enums.CheckboxItems;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public abstract class BaseGroup extends BaseGroupChecks {
+public class BaseGroup extends BasePage {
     protected WebDriver driver;
     protected Logger logger = Logger.getLogger(BasePage.class);
-    private By card = By.cssSelector(".auth-bar__item.auth-bar__item--cart");
-    private By item = By.cssSelector(".schema-product__title");
+    protected WebDriverWait wait;
+    private By results = By.xpath("//div[contains(@class, g)]//a[@class='js-product-title-link']");
+    private String productPattern = ("(//*[class='.schema-product__title'])[%s]");
+    private String product = ("(//*[class='.schema-product__title'])");
+
+    public String getText() {
+        return text;
+    }
+
+    public String text = getItemName();
 
     protected BaseGroup(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(10));
     }
@@ -25,23 +37,20 @@ public abstract class BaseGroup extends BaseGroupChecks {
         return this;
     }
 
-    public BaseGroup goToCard() {
-        logger.debug("go to card");
-        driver.findElement(card).click();
-        return this;
+    public String getItemName() {
+        return driver.findElement(By.xpath(product)).getText();
     }
 
-    public BaseGroup getItemName() {
-        logger.debug("get item Name");
-        driver.findElement(item).click();
-        return this;
-    }
-
-    public BaseGroup clickOnItem() {
+    public BaseGroup clickOnItem(int index) {
         logger.debug("Click on item");
-        driver.findElement(item).click();
+        driver.findElement(By.xpath(String.format(productPattern, index))).click();
         return this;
     }
 
+    public List<String> getSearchResults() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(results));
+        List<String> data = driver.findElements(results).stream().map(result -> result.getText()).collect(Collectors.toList());
+        return data;
+    }
 
 }
