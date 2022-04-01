@@ -39,4 +39,8 @@ public abstract class BasePage {
         return this;
     }
 
+    public Integer findElementsCount(By element) {
+        logger.debug("Find elements count " + element);
+        return driver.findElements(element).size();
+    }
 }

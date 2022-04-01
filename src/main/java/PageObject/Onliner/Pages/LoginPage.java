@@ -12,7 +12,7 @@ public class LoginPage extends BasePage {
     private By passwordRepeat = By.xpath("//*[@autocomplete='repeatPassword']//input");
     private By wrongEmail = By.xpath("//div[@class='auth-form__description auth-form__description_error auth-form__description_base auth-form__description_extended-other']");
     private By wrongPassword = By.xpath("//div[@class='auth-form__description auth-form__description_primary auth-form__description_tiny auth-form__description_condensed-other']");
-    private By wrongRepeatPassword = By.xpath("//div[@class='auth-form__description auth-form__description_error auth-form__description_base auth-form__description_extended-other']");
+    private By wrongRepeatPassword = By.xpath("//div[@class='auth-form__description auth-form__description_error auth-form__description_base auth-form__description_extended-other'][2]");
 
     public LoginPage(WebDriver driver) {
         super(driver);

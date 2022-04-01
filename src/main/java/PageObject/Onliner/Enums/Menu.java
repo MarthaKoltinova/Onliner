@@ -1,7 +1,9 @@
 package PageObject.Onliner.Enums;
 
 public enum Menu {
-    CATALOG("Каталог");
+    CATALOG("Каталог"),
+    SERVICES("Услуги"),
+    FORUM("Форум");
     String menu;
 
     Menu(String menu) {

@@ -3,6 +3,7 @@ package Task7;
 import BaseObjects.BaseTest;
 import PageObject.BaseGroup;
 import PageObject.BaseGroupChecks;
+import PageObject.BasePageChecks;
 import PageObject.Onliner.Enums.*;
 import PageObject.Onliner.Pages.*;
 import org.testng.annotations.BeforeMethod;
@@ -17,8 +18,8 @@ public class Task7 extends BaseTest {
     }
 
     @Test(priority = 1)
-    public void searchInCatalog() {
-        logger.info("Test searchInCatalog started");
+    public void searchInMobileCatalog() {
+        logger.info("Test searchInMobileCatalog started");
         get(HomePage.class)
                 .clickOnMenu(Menu.CATALOG);
         get(CatalogPage.class)
@@ -31,12 +32,12 @@ public class Task7 extends BaseTest {
                 .clickOnCheckbox(CheckboxItems.HONOR);
         get(BaseGroupChecks.class)
                 .checkSearchResults("HONOR");
-        logger.info("Test searchInCatalog finished");
+        logger.info("Test searchInMobileCatalog finished");
     }
 
     @Test(priority = 2)
-    public void catalogSearch() {
-        logger.info("Test pageResults  started");
+    public void verifyRegistration() {
+        logger.info("Test verifyRegistration  started");
         get(HomePage.class)
                 .clickOnEntrance();
         get(LoginPage.class)
@@ -51,14 +52,13 @@ public class Task7 extends BaseTest {
                 .enterPassword(1234)
                 .enterRepeatPassword(111111111);
         get(LoginPageChecks.class)
-                .verifyThatPasswordHintsIs("Минимум 8 символов")
-                .verifyThatRepeatPasswordHintsIs("Пароли не совпадают");
-        logger.info("Test catalogSearch finished");
+                .verifyThatPasswordHintsIs("Минимум 8 символов");
+        logger.info("Test verifyRegistration finished");
     }
 
     @Test(priority = 3)
-    public void addItemToCart() {
-        logger.info("Test addItemToCart  started");
+    public void addGamingConsolesItemToCart() {
+        logger.info("Test addGamingConsolesItemToCart  started");
         get(HomePage.class)
                 .clickOnMenu(Menu.CATALOG);
         get(CatalogPage.class)
@@ -67,8 +67,7 @@ public class Task7 extends BaseTest {
                 .clickOnItem(Group.GAMING_CONSOLES);
         get(BaseGroupChecks.class)
                 .verifyThatTitleIs("Игровые приставки");
-        get(BaseGroup.class)
-                .getItemName();
+        String text = String.valueOf(get(GamingConsolesPage.class).getTitleByIndex(1));
         get(GamingConsolesPage.class)
                 .clickOnItem(1);
         get(ProductPage.class)
@@ -82,9 +81,45 @@ public class Task7 extends BaseTest {
                 .verifyTextOfTheCartButton("В корзине");
         get(GamingConsolesPage.class)
                 .goToCart();
+        String text2 = get(CartPage.class).getProductName();
+        get(CartPageChecks.class)
+                .verifyProductNameInCart(text, text2);
+        logger.info("Test addGamingConsolesItemToCart finished");
+    }
+
+    @Test(priority = 4)
+    public void servicesTest() {
+        logger.info("Test services started");
+        get(HomePage.class)
+                .clickOnMenu(Menu.SERVICES);
+        get(BasePageChecks.class)
+                .verifyThatTitleOfTabIs("Заказы на услуги");
+        get(OrdersPage.class)
+                .clickOnCheckbox(CheckboxItems.UNFULFILLED);
         get(BaseGroupChecks.class)
-                .verifyProductNameInCart();
-        logger.info("Test addItemToCart finished");
+                .checkStatusOfResults("Не выполнен");
+        BaseGroup baseGroup = new BaseGroup(driver);
+        get(OrdersPage.class)
+                .findElementsCount(baseGroup.countOfSearchResults);
+        get(BaseGroupChecks.class)
+                .checkStatusBelowPrice("Не выполнен");
+        logger.info("Test services finished");
+    }
+
+    @Test(priority = 5)
+    public void forumTest() {
+        logger.info("Test forum started");
+        get(HomePage.class)
+                .clickOnMenu(Menu.FORUM);
+        get(BasePageChecks.class)
+                .verifyThatTitleOfTabIs("Форум onliner.by - Главная страница");
+        get(ForumPage.class)
+                .clickLink(Links.NEW);
+        get(BaseGroupChecks.class)
+                .verifyThatTitleIs("Новое за 24 часа")
+                .checkTimeOfResults("дн")
+                .checkStatusBelowPrice("Не выполнен");
+        logger.info("Test forum finished");
     }
 }
 
