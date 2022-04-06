@@ -9,9 +9,9 @@ public class CartPageChecks extends CartPage {
         super(driver);
     }
 
-    public CartPageChecks verifyProductNameInCart(String value, String value2) {
+    public CartPageChecks verifyProductNameInCart(String value) {
         logger.debug("Verify title name");
-        Assert.assertEquals(value, value2);
+        Assert.assertEquals(getProductName(), value);
         return this;
     }
 

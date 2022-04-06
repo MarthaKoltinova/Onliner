@@ -1,7 +1,6 @@
 package Task7;
 
 import BaseObjects.BaseTest;
-import PageObject.BaseGroup;
 import PageObject.BaseGroupChecks;
 import PageObject.BasePageChecks;
 import PageObject.Onliner.Enums.*;
@@ -22,16 +21,23 @@ public class Task7 extends BaseTest {
         logger.info("Test searchInMobileCatalog started");
         get(HomePage.class)
                 .clickOnMenu(Menu.CATALOG);
+        get(BasePageChecks.class)
+                .verifyThatTitleOfTabIs("Каталог Onlíner");
         get(CatalogPage.class)
                 .clickOnTabCategory(Category.ELECTRONICS)
                 .clickOnTabSubCategory(SubCategory.MOBILE_PHONES)
                 .clickOnItem(Group.PHONES);
+        get(BasePageChecks.class)
+                .verifyThatTitleOfTabIs("Мобильный телефон купить в Минске");
         get(BaseGroupChecks.class)
                 .verifyThatTitleIs("Мобильные телефоны");
         get(MobilePhonesPage.class)
                 .clickOnCheckbox(CheckboxItems.HONOR);
         get(BaseGroupChecks.class)
                 .checkSearchResults("HONOR");
+        get(MobilePhonesPage.class)
+                .clickOnDropDownList()
+                .chooseKindOfProduct();
         logger.info("Test searchInMobileCatalog finished");
     }
 
@@ -61,6 +67,8 @@ public class Task7 extends BaseTest {
         logger.info("Test addGamingConsolesItemToCart  started");
         get(HomePage.class)
                 .clickOnMenu(Menu.CATALOG);
+        get(BasePageChecks.class)
+                .verifyThatTitleOfTabIs("Каталог Onlíner");
         get(CatalogPage.class)
                 .clickOnTabCategory(Category.ELECTRONICS)
                 .clickOnTabSubCategory(SubCategory.VIDEO_GAMES)
@@ -81,9 +89,8 @@ public class Task7 extends BaseTest {
                 .verifyTextOfTheCartButton("В корзине");
         get(GamingConsolesPage.class)
                 .goToCart();
-        String text2 = get(CartPage.class).getProductName();
         get(CartPageChecks.class)
-                .verifyProductNameInCart(text, text2);
+                .verifyProductNameInCart(text);
         logger.info("Test addGamingConsolesItemToCart finished");
     }
 
@@ -96,13 +103,13 @@ public class Task7 extends BaseTest {
                 .verifyThatTitleOfTabIs("Заказы на услуги");
         get(OrdersPage.class)
                 .clickOnCheckbox(CheckboxItems.UNFULFILLED);
-        get(BaseGroupChecks.class)
-                .checkStatusOfResults("Не выполнен");
-        BaseGroup baseGroup = new BaseGroup(driver);
-        get(OrdersPage.class)
-                .findElementsCount(baseGroup.countOfSearchResults);
-        get(BaseGroupChecks.class)
-                .checkStatusBelowPrice("Не выполнен");
+        get(OrderPageChecks.class)
+                .verifyStatusOfResultsIs("Не выполнен");
+        OrdersPage ordersPage = new OrdersPage(driver);
+        get(OrderPageChecks.class)
+                .checkThatCountOfElementsMoreThanOne(ordersPage.countOfSearchResults);
+        get(OrderPageChecks.class)
+                .verifyStatusBelowPriceIs("Не выполнен");
         logger.info("Test services finished");
     }
 
@@ -115,10 +122,14 @@ public class Task7 extends BaseTest {
                 .verifyThatTitleOfTabIs("Форум onliner.by - Главная страница");
         get(ForumPage.class)
                 .clickLink(Links.NEW);
-        get(BaseGroupChecks.class)
-                .verifyThatTitleIs("Новое за 24 часа")
-                .checkTimeOfResults("дн")
-                .checkStatusBelowPrice("Не выполнен");
+        get(ForumPageChecks.class)
+                .verifyThatTitleIs("Новое за 24 часа");
+        get(ForumPage.class)
+                .countOfThemesIs();
+        get(ForumPage.class)
+                .clickPage();
+        get(ForumPageChecks.class)
+                .verifyThatTimeOfPublicationLessThan24Hour("дн");
         logger.info("Test forum finished");
     }
 }

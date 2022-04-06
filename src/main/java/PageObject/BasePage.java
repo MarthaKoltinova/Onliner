@@ -38,9 +38,4 @@ public abstract class BasePage {
         driver.findElement(cart).click();
         return this;
     }
-
-    public Integer findElementsCount(By element) {
-        logger.debug("Find elements count " + element);
-        return driver.findElements(element).size();
-    }
 }

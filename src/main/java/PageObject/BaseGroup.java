@@ -1,13 +1,11 @@
 package PageObject;
 
 import PageObject.Onliner.Enums.CheckboxItems;
-import PageObject.Onliner.Enums.Links;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.List;
@@ -18,10 +16,9 @@ public class BaseGroup extends BasePage {
     protected Logger logger = Logger.getLogger(BasePage.class);
     protected WebDriverWait wait;
     private By results = By.xpath("//div[contains(@class, g)]//a[@class='js-product-title-link']");
-    private By statusResults = By.cssSelector(".service-offers__status.ng-scope.service-offers__status_error");
-    public By countOfSearchResults = By.xpath("//*[@class='service-interaction__inner-container']");
     private By title = By.tagName("h1");
-    private By publicationTime = By.xpath("//div[contains(@class, g)]//a[@class='link-getlast']");
+    private By dropDownList = By.className("schema-order__link");
+    private By kindOfProduct = By.xpath("//*[@class='schema-order__item']//*[text()='Дорогие']");
     private String productPattern = ("(//*[class='.schema-product__title'])[%s]");
 
     public BaseGroup(WebDriver driver) {
@@ -54,38 +51,21 @@ public class BaseGroup extends BasePage {
         return data;
     }
 
-    public List<String> getTimeOfResults() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(publicationTime));
-        List<String> data = driver.findElements(publicationTime).stream().map(result -> result.getText()).collect(Collectors.toList());
-        return data;
-    }
-
-    public BaseGroup getTitle() {
+    public String getTitle() {
         logger.debug("get title");
         wait.until(ExpectedConditions.visibilityOfElementLocated(title));
-        driver.findElement(title).getText();
+        return driver.findElement(title).getText();
+    }
+
+    public BaseGroup clickOnDropDownList() {
+        logger.debug("Click on drop down list");
+        driver.findElement(dropDownList).click();
         return this;
     }
 
-    public Integer findElementsCount(By element) {
-        logger.debug("Find elements count " + element);
-        Assert.assertTrue(driver.findElements(element).size() > 1);
-        return driver.findElements(element).size();
-    }
-
-    public By getStatusResults() {
-        return statusResults;
-    }
-
-    public List<String> getStatusOfResults() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(statusResults));
-        List<String> data = driver.findElements(statusResults).stream().map(result -> result.getText()).collect(Collectors.toList());
-        return data;
-    }
-
-    public BaseGroup clickLink(Links links) {
-        logger.debug("Click on link");
-        driver.findElement(By.linkText(links.getLinks())).click();
+    public BaseGroup chooseKindOfProduct() {
+        logger.debug("Choose kind of product");
+        driver.findElement(kindOfProduct).click();
         return this;
     }
 }
