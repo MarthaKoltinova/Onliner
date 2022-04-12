@@ -1,6 +1,5 @@
 package PageObject.Onliner.Pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
@@ -21,6 +20,12 @@ public class ForumPageChecks extends ForumPage {
             logger.info("Check that " + expected + " contains in " + actual);
             Assert.assertFalse(actual.contains(expected), "Check that " + expected + " contains in " + actual);
         });
+        return this;
+    }
+
+    public ForumPage checkThatCountOfThemesMoreThan(int count) {
+        logger.debug("Verify count Of themes");
+        Assert.assertTrue(getCount() > 1,count);
         return this;
     }
 }

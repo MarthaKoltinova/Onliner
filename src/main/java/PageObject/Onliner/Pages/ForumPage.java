@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
 public class ForumPage extends BasePage {
     private By title = By.tagName("h1");
     private By publicationTime = By.xpath("//div[contains(@class, g)]//a[@class='link-getlast']");
-    private By pageNumber = By.xpath("//*[@class='pages-fastnav']//li//*[text()='6']");
+    private By pageNumber = By.xpath("//*[@class='pages-fastnav']//li)[last()]");
     public By countOfThemes = By.xpath("//*[@class='m-title']//*[contains(text(),'найдено')]");
     protected WebDriverWait wait;
 
@@ -42,15 +41,15 @@ public class ForumPage extends BasePage {
         return data;
     }
 
-    public ForumPage clickPage() {
+    public ForumPage clickLastPage() {
         logger.debug("Click on page");
         driver.findElement(pageNumber).click();
         return this;
     }
 
-    public ForumPage countOfThemesIs() {
-        logger.debug("Verify count Of themes");
-        logger.info(countOfThemes+"more than 1");
-        return this;
+    public String getCount() {
+        logger.debug("get count");
+        String[] count= (String[]) driver.findElements(countOfThemes).toArray();
+        return count[1];
     }
 }

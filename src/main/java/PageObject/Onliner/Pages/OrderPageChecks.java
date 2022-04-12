@@ -2,10 +2,7 @@ package PageObject.Onliner.Pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-
-import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 public class OrderPageChecks extends OrdersPage{
 
@@ -21,15 +18,16 @@ public class OrderPageChecks extends OrdersPage{
         return this;
     }
 
-    public Integer checkThatCountOfElementsMoreThanOne(By element) {
+    public Integer checkThatCountOfElementsMoreThan(By element,int count) {
         logger.debug("Find elements count " + element);
-        Assert.assertTrue(driver.findElements(element).size() > 1);
+        Assert.assertTrue(driver.findElements(element).size() > count);
         return driver.findElements(element).size();
     }
 
     public OrderPageChecks verifyStatusBelowPriceIs(String expected) {
-        WebElement price = driver.findElement(By.className("service-offers__price"));
-        Assert.assertEquals(driver.findElement(with(getStatusResults()).below(price)), expected);
+        getStatusOfResults().forEach(actual -> {
+            Assert.assertTrue(actual.contains(expected), "Check that " + expected + " contains in " + actual);
+        });
         return this;
     }
 }

@@ -37,7 +37,7 @@ public class Task7 extends BaseTest {
                 .checkSearchResults("HONOR");
         get(MobilePhonesPage.class)
                 .clickOnDropDownList()
-                .chooseKindOfProduct();
+                .chooseKindOfProductByPriceType("Дорогие");
         logger.info("Test searchInMobileCatalog finished");
     }
 
@@ -107,7 +107,7 @@ public class Task7 extends BaseTest {
                 .verifyStatusOfResultsIs("Не выполнен");
         OrdersPage ordersPage = new OrdersPage(driver);
         get(OrderPageChecks.class)
-                .checkThatCountOfElementsMoreThanOne(ordersPage.countOfSearchResults);
+                .checkThatCountOfElementsMoreThan(ordersPage.countOfSearchResults,1);
         get(OrderPageChecks.class)
                 .verifyStatusBelowPriceIs("Не выполнен");
         logger.info("Test services finished");
@@ -123,11 +123,10 @@ public class Task7 extends BaseTest {
         get(ForumPage.class)
                 .clickLink(Links.NEW);
         get(ForumPageChecks.class)
-                .verifyThatTitleIs("Новое за 24 часа");
+                .verifyThatTitleIs("Новое за 24 часа")
+                .checkThatCountOfThemesMoreThan(1);
         get(ForumPage.class)
-                .countOfThemesIs();
-        get(ForumPage.class)
-                .clickPage();
+                .clickLastPage();
         get(ForumPageChecks.class)
                 .verifyThatTimeOfPublicationLessThan24Hour("дн");
         logger.info("Test forum finished");
